@@ -774,6 +774,7 @@ export interface ApiBlogBlog extends Schema.CollectionType {
     singularName: 'blog';
     pluralName: 'blogs';
     displayName: 'blogs';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -782,6 +783,16 @@ export interface ApiBlogBlog extends Schema.CollectionType {
     title: Attribute.String;
     content: Attribute.Blocks;
     image: Attribute.Media;
+    blog_author: Attribute.Relation<
+      'api::blog.blog',
+      'manyToOne',
+      'api::blog-author.blog-author'
+    >;
+    blog_category: Attribute.Relation<
+      'api::blog.blog',
+      'manyToOne',
+      'api::blog-category.blog-category'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -805,6 +816,11 @@ export interface ApiBlogAuthorBlogAuthor extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     image: Attribute.Media;
+    blogs: Attribute.Relation<
+      'api::blog-author.blog-author',
+      'oneToMany',
+      'api::blog.blog'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -835,6 +851,11 @@ export interface ApiBlogCategoryBlogCategory extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String;
+    blogs: Attribute.Relation<
+      'api::blog-category.blog-category',
+      'oneToMany',
+      'api::blog.blog'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
